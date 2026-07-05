@@ -122,6 +122,19 @@ Kirimana has **no web UI — your LLM assistant is the interface.** The `kiri-mc
 
 Then just ask Kiri: *"Using the kiri catalog, what PII do we hold — and draft a contract for the orders table."* Kiri reads your project, drafts the artifacts, and hands you the `kiri plan` / `kiri apply` commands to run.
 
+### Let Kiri drive it — reference skills
+
+Kirimana ships a set of **Claude Code skills** — small, governed wrappers around the CLI that codify the governance rules. Invoke with `/<skill-name>` in Claude Code, or ask your MCP-connected assistant to run one. Good starting points:
+
+- **`databricks-project-setup`** — guided end-to-end setup of a new project on Databricks (sizing, scaffold, naming, target + secrets)
+- **`databricks-build-pipeline`** — build a full pipeline end to end: endpoint → silver → gold → scheduled jobs
+- **`add-source`** — onboard a new ingest source (airbyte / native / dlt / debezium / landing_zone)
+- **`draft-gold-model`** — draft a Kimball star schema from your silver layer
+- **`promote-contract`** — advance a contract through the medallion state machine
+- **`debug-apply`** — have Kiri read a failed run and propose the fix
+
+The skills ship with the CLI and source. **New here?** Follow the runbook: [**From first startup to production**](docs/cli/guides/first-platform-to-production.md) — `pip install` → live endpoint → full medallion on Databricks. See also [wiring MCP](docs/cli/guides/mcp-databricks-and-kiri-setup.md) and [AI-gateway setup](docs/cli/guides/ai-gateway-setup.md).
+
 ### Source access (private beta)
 
 Kirimana is in an **invitation-only private beta**. The engine source, the self-host and adapter tooling, and the runnable examples live in a private repository during the beta and are not part of this public front-door repo.

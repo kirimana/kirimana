@@ -26,15 +26,18 @@ Task- and concept-oriented walkthroughs that compose the command reference below
 | Guide |
 | --- |
 | [Adding a source](guides/adding-a-source.md) |
+| [Getting the AI gateway working](guides/ai-gateway-setup.md) |
 | [The AI trust ladder and human approvals](guides/ai-trust-ladder-and-approvals.md) |
 | [Backfill and reprocess](guides/backfill-and-reprocess.md) |
 | [Consuming gold for BI](guides/consuming-gold-for-bi.md) |
 | [Data quality and invariants](guides/data-quality-and-invariants.md) |
 | [Databricks and the adapter model](guides/databricks-and-adapters.md) |
+| [From first startup to production: your first endpoint and medallion](guides/first-platform-to-production.md) |
 | [Getting started: an end-to-end walkthrough](guides/getting-started-walkthrough.md) |
 | [Gold star schema & localized serving twins](guides/gold-star-schema-and-localized-twins.md) |
 | [Governance & the catalog](guides/governance-and-catalog.md) |
 | [Lineage: column, goal, drift & impact](guides/lineage-column-and-goal.md) |
+| [Wiring MCP: Databricks and Kiri as tools for your assistant](guides/mcp-databricks-and-kiri-setup.md) |
 | [The medallion + contracts model](guides/medallion-and-contracts-model.md) |
 | [Migrating from a legacy warehouse](guides/migration-from-legacy.md) |
 | [Naming, catalog & the schema registry](guides/naming-catalog-and-schema-registry.md) |
