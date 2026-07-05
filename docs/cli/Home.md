@@ -69,3 +69,4 @@ Task- and concept-oriented walkthroughs that compose the command reference below
 | [AI Assistants](ai-assistants.md) | Use Kiri-assisted planning, explanation, maturity, batch, and incident support commands. | 7 |
 | [Packs Extensions](packs-extensions.md) | Install and manage community or organization-authored extension packs. | 1 |
 | [Docs Meta](docs-meta.md) | Generate project documentation and documentation metadata. | 1 |
+| [Other](other.md) | Commands not yet assigned to a functional area. | 1 |

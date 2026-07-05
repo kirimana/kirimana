@@ -295,3 +295,7 @@
 * [Docs Meta](docs-meta.md)
   * [kiri docs](docs-meta.md#kiri-docs)
     * [kiri docs generate](docs-meta.md#kiri-docs-generate)
+* [Other](other.md)
+  * [kiri skills](other.md#kiri-skills)
+    * [kiri skills install](other.md#kiri-skills-install)
+    * [kiri skills list](other.md#kiri-skills-list)

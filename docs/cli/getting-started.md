@@ -35,6 +35,7 @@ Usage: kiri init [OPTIONS] NAME
 | `--push` | Run `git push -u origin <branch>` after adding the remote (requires --remote and auth) | no | False |  |
 | `--github` | After scaffold + git-init + set-active, create the GitHub remote repo and push the initial commit so the scaffolded per-project CI runs automatically. A convenience - the emitted git + GitHub Actions still work with a manually-wired remote. | no | False |  |
 | `--private`, `--public` | With --github: create the repo private (default - DW projects are sensitive) or public (explicit opt-out). | no | True |  |
+| `--with-sample-data` | Also drop a bundled sample fixture (customers.csv) + a bronze contract so a fresh project reaches a working DuckDB table with zero authoring: after init, run `kiri plan` then `kiri apply`. | no | False |  |
 
 ## kiri project
 

@@ -42,6 +42,8 @@ kiri init sales_dw \
 
 This scaffolds `sales_dw/` with a `kiri.yml`, the medallion folder structure, and a git repo (pass `--no-git` to skip). It refuses to scaffold inside the Kirimana source checkout — your project must be its own repository.
 
+> **Fastest path to a running table:** add `--with-sample-data` to `kiri init`. It drops a bundled fixture (`data/raw/example/customers.csv`) and a matching bronze contract for the built-in `example` source, so you can skip straight to `kiri plan` and `kiri apply` (sections 5–6) and watch a governed bronze table populate — no source or contract authoring needed. The rest of this walkthrough shows the same steps by hand.
+
 Make it the active project for this shell:
 
 ```bash
@@ -72,7 +74,15 @@ kiri source validate --content sources/customers.yml
 kiri source commit --target sources/customers.yml --content sources/customers.yml
 ```
 
-Drop a matching `customers.csv` into `data/raw/` so there is something to ingest. (For real sources — REST, database, Airbyte — see [adding a source](adding-a-source.md).)
+Drop a matching CSV so there is something to ingest. The localduckdb adapter reads `fixture_file` sources from `<fixtures_dir>/<source>/<table>.csv`, and the scaffolded `kiri.yml` sets `fixtures_dir: ./data/raw` — so this source's fixture goes at `data/raw/customers/customers.csv` with a header row that matches the table's columns, e.g.:
+
+```csv
+customer_id,name
+C001,Ada Lovelace
+C002,Alan Turing
+```
+
+(For real sources — REST, database, Airbyte — see [adding a source](adding-a-source.md). To skip this step entirely, re-run `kiri init --with-sample-data`.)
 
 ## 4. Author and validate a contract
 

@@ -124,7 +124,7 @@ Then just ask Kiri: *"Using the kiri catalog, what PII do we hold — and draft 
 
 ### Let Kiri drive it — reference skills
 
-Kirimana ships a set of **Claude Code skills** — small, governed wrappers around the CLI that codify the governance rules. Invoke with `/<skill-name>` in Claude Code, or ask your MCP-connected assistant to run one. Good starting points:
+Kirimana ships a set of **Claude Code skills** — small, governed wrappers around the CLI that codify the governance rules. They travel **inside the `kiri-cli` wheel**: run `kiri skills list` to see them and `kiri skills install <name>` (or `--all`) to drop them into your project's `.claude/skills/`. Invoke with `/<skill-name>` in Claude Code, or ask your MCP-connected assistant to run one. Good starting points:
 
 - **`databricks-project-setup`** — guided end-to-end setup of a new project on Databricks (sizing, scaffold, naming, target + secrets)
 - **`databricks-build-pipeline`** — build a full pipeline end to end: endpoint → silver → gold → scheduled jobs
@@ -133,7 +133,7 @@ Kirimana ships a set of **Claude Code skills** — small, governed wrappers arou
 - **`promote-contract`** — advance a contract through the medallion state machine
 - **`debug-apply`** — have Kiri read a failed run and propose the fix
 
-The skills ship with the CLI and source. **New here?** Follow the runbook: [**From first startup to production**](docs/cli/guides/first-platform-to-production.md) — `pip install` → live endpoint → full medallion on Databricks. See also [wiring MCP](docs/cli/guides/mcp-databricks-and-kiri-setup.md) and [AI-gateway setup](docs/cli/guides/ai-gateway-setup.md).
+**New here?** Follow the runbook: [**From first startup to production**](docs/cli/guides/first-platform-to-production.md) — `pip install` → live endpoint → full medallion on Databricks. See also [wiring MCP](docs/cli/guides/mcp-databricks-and-kiri-setup.md) and [AI-gateway setup](docs/cli/guides/ai-gateway-setup.md).
 
 ### Source access (private beta)
 
