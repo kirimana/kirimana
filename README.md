@@ -105,6 +105,23 @@ kiri --help                   # explore: init · ingest · contract · plan · a
 
 See the full command reference in [`docs/cli/`](docs/cli/).
 
+### Point your assistant at it (MCP)
+
+Kirimana has **no web UI — your LLM assistant is the interface.** The `kiri-mcp` server (ships with `kiri-cli`) exposes your project's catalog, lineage, and PII to any MCP-capable client (Claude Desktop, Claude Code, Cursor, …). For Claude Desktop, add to `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "kiri": {
+      "command": "kiri-mcp",
+      "env": { "KIRIMANA_PROJECT_DIR": "/absolute/path/to/my_warehouse" }
+    }
+  }
+}
+```
+
+Then just ask Kiri: *"Using the kiri catalog, what PII do we hold — and draft a contract for the orders table."* Kiri reads your project, drafts the artifacts, and hands you the `kiri plan` / `kiri apply` commands to run.
+
 ### Source access (private beta)
 
 Kirimana is in an **invitation-only private beta**. The engine source, the self-host and adapter tooling, and the runnable examples live in a private repository during the beta and are not part of this public front-door repo.
@@ -114,10 +131,14 @@ The published `kiri-cli` wheel on PyPI is the primary way to use Kirimana today 
 ## Architecture at a glance
 
 ```
-        You / your team
-              │
-   ┌──────────┴──────────────────────────────────────┐
-   │   kiri (CLI)    ·    MCP server    ·    web UI     │   ← how you interact
+        You  —  "What PII is here?  Draft the orders contract.  Why did silver fail?"
+              │   plain language
+   ┌──────────▼──────────────────────────────────────┐
+   │  Claude (Desktop / Code)  ·  or your preferred LLM │   ← your interface: a conversation
+   └──────────┬──────────────────────────────────────┘
+              │   MCP  ·  kiri-mcp  (catalog · lineage · PII · contracts)
+   ┌──────────▼──────────────────────────────────────┐
+   │  kiri  —  the CLI (Kiri, the AI assistant)        │   ← Kiri drafts · you plan / apply
    └──────────┬──────────────────────────────────────┘
               │
    ┌──────────▼──────────────────────────────────────┐
@@ -125,11 +146,13 @@ The published `kiri-cli` wheel on PyPI is the primary way to use Kirimana today 
    │  contract model · code generation · AI gateway ·  │
    │  quality · catalog · vault                         │
    └──────────┬──────────────────────────────────────┘
-              │  adapters (platform + framework)
+              │   adapters (platform + framework)
    ┌──────────▼──────────────────────────────────────┐
    │   DuckDB (local)        Databricks (Delta)        │   ← runtimes exercised today
    └──────────────────────────────────────────────────┘
 ```
+
+**Your interface is a conversation — there's no web UI, and you don't need one.** Kirimana ships an **MCP server** (`kiri-mcp`), so you point Claude (Desktop or Code) — or any preferred LLM that speaks the [Model Context Protocol](https://modelcontextprotocol.io) — at your project and just describe what you want: *"what PII is in this catalog?"*, *"draft a contract for the orders table"*, *"what does the silver layer look like, and why did the last run fail?"* **Kiri**, the assistant persona, reads your contracts, catalog, and lineage through MCP, drafts the artifacts, and hands you the exact `kiri plan` / `kiri apply` commands to run — every AI call audited through the gateway. Prefer the keyboard? Every capability is a plain `kiri` subcommand you run yourself; the assistant is an accelerator on the same engine, never a dependency.
 
 The core is deliberately platform-agnostic: transformations are generated as dialect-rendered dbt-core, and everything platform-specific sits behind a documented adapter seam. **DuckDB and Databricks are the runtimes exercised today.** The adapter architecture is how additional platforms are added — that surface exists, but only these two are shipped and tested.
 
