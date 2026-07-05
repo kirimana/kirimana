@@ -1,31 +1,33 @@
 # Security Policy
 
-## Supported versions
-
-Kirimana is in private preview (v0.9). Security fixes apply to the current preview release and to v1.0 once shipped.
-
 ## Reporting a vulnerability
 
-If you find a security issue — in our code, our documentation, or in this repository's infrastructure — please report it privately, **not** via public issue.
+**Do not open a public GitHub issue for security vulnerabilities.**
 
-**Email:** `security@kirimana.io`
+Email security@kirimana.dev with:
 
-We aim to respond within 48 hours on business days. We follow a coordinated-disclosure model: we will work with you on a remediation timeline (default 90 days) before public disclosure, and we will credit you in the security advisory unless you prefer otherwise.
+- A description of the issue
+- Steps to reproduce
+- The affected version(s)
+- Any known mitigations
+
+We aim to acknowledge reports within 3 business days and issue a fix or mitigation within 30 days for high-severity issues. The coordinated-disclosure window is 90 days.
 
 ## Scope
 
-The following are in scope:
+| In scope                                    | Out of scope                         |
+|---------------------------------------------|--------------------------------------|
+| Code in this repository                     | Customer deployments                 |
+| Official docker images                      | Third-party packs (report to owner)  |
+| Default configuration                       | User-customised deployments          |
 
-- Vulnerabilities in Kirimana code (when source is published)
-- Vulnerabilities in adapter implementations we maintain
-- Issues that allow contracts or audit records to be tampered with
-- Issues that bypass the AI Gateway trust ladder
+## Security design principles
 
-The following are out of scope:
+Kirimana follows **shift-left** security:
 
-- Issues in third-party platforms we integrate with (please report to the platform vendor)
-- Issues affecting Kirimana running on unsupported configurations
-
-## Security updates
-
-During preview, security fixes ship as new tagged versions on a "best speed" basis. From v1.0, we will publish security advisories via GitHub Security Advisories and the changelog.
+1. **Secrets never in code or metadata.** Use `${vault:...}` references; plaintext fails CI.
+2. **Audit every AI call.** The `AIService` layer logs prompts, responses, cost, and caller identity for every LLM invocation.
+3. **PII declared in contracts.** Contracts carry `kiri.pii`, `kiri.gdpr`, and `kiri.classification` fields. Governance surfaces them in the catalog.
+4. **No unmotivated outbound calls.** AI-provider egress is per-workspace opt-in; default is fully disabled.
+5. **Dependencies are scanned.** CI runs `pip-audit` on every commit.
+6. **Least-privilege adapters.** Each platform adapter documents the minimum credentials it requires.

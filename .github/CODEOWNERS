@@ -1,0 +1,6 @@
+# Code ownership for review routing.
+# See https://docs.github.com/articles/about-code-owners
+# Until additional maintainers are onboarded (see MAINTAINERS.md), the
+# project maintainer owns all paths.
+
+*       @dbarton1974
