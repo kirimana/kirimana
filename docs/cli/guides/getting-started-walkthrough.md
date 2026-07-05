@@ -139,8 +139,21 @@ kiri silver plan             # the locked technique + planned silver contracts
 kiri silver conformance      # technique-appropriate conformance + evidence
 ```
 
+## 8. Health-check the project
+
+`kiri doctor` runs every project health check at once and prints a ranked, actionable punch-list — so you don't have to remember the individual `validate` / `lint` / `conformance` commands:
+
+```bash
+kiri doctor                    # offline checks (contracts, technique, sources, fixtures, layer)
+kiri doctor --target dev       # also probes the live target (adapter health)
+kiri doctor --format json --strict   # one CI project-health gate (exit 2 on any problem)
+```
+
+Each finding carries a copy-pasteable fix. Warnings don't fail by default; `--strict` promotes them. See [project health with kiri doctor](project-health-doctor.md).
+
 You now have an end-to-end medallion build on DuckDB. From here:
 
+- Triage project health any time — [project health with kiri doctor](project-health-doctor.md)
 - Add more sources — [adding a source](adding-a-source.md)
 - Understand the build lifecycle and debugging — [plan, apply & debugging](plan-apply-and-debugging.md)
 - Choose your silver modelling approach deliberately — [silver ways of working](silver-layer-ways-of-working.md)

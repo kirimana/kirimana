@@ -43,6 +43,7 @@ Task- and concept-oriented walkthroughs that compose the command reference below
 | [Naming, catalog & the schema registry](guides/naming-catalog-and-schema-registry.md) |
 | [Orchestration & scheduling](guides/orchestration-and-scheduling.md) |
 | [Plan, apply, and debugging](guides/plan-apply-and-debugging.md) |
+| [Project health with `kiri doctor`](guides/project-health-doctor.md) |
 | [Release promotion & CI/CD](guides/release-promotion-and-cicd.md) |
 | [Security and compliance — an end-to-end walkthrough](guides/security-and-compliance.md) |
 | [Silver-layer ways of working](guides/silver-layer-ways-of-working.md) |
@@ -55,7 +56,7 @@ Task- and concept-oriented walkthroughs that compose the command reference below
 | [Getting Started](getting-started.md) | Bootstrap projects, choose active workspaces, manage targets, and keep local Kirimana project scaffolding current. | 7 |
 | [Sources And Ingestion](sources-ingestion.md) | Define sources, discover live systems, map source intent, and move data into landing and bronze zones. | 5 |
 | [Contracts And Schema](contracts-schema.md) | Work with data contracts, schemas, semantic intent, layer manifests, and contract comparison or linting commands. | 6 |
-| [Build Plan Apply](build-plan-apply.md) | Plan changes, apply generated work, compile platform artefacts, and verify generated output. | 7 |
+| [Build Plan Apply](build-plan-apply.md) | Plan changes, apply generated work, compile platform artefacts, and verify generated output. | 8 |
 | [Silver And Data Vault](silver-datavault.md) | Operate silver-layer and Data Vault workflows, referential checks, and point-in-time access. | 4 |
 | [Gold Analytics](gold-analytics.md) | Draft and publish analytics-facing models, KPIs, semantic-layer artefacts, and governed graduation flows. | 5 |
 | [Governance Catalog Access](governance-catalog-access.md) | Manage catalog, governance, access-control, retention, classification, audit, and compliance workflows. | 7 |

@@ -178,6 +178,31 @@ None.
 | `--contracts` | Directory holding silver ODCS YAML. | yes |  |  |
 | `--output` | Output file. | yes |  |  |
 
+## kiri doctor
+
+Run every project health check and print a...
+
+### Usage
+
+```text
+Usage: kiri doctor [OPTIONS]
+```
+
+### Arguments
+
+None.
+
+### Options
+
+| Name | Description | Required | Default | Choices |
+| --- | --- | --- | --- | --- |
+| `--project`, `-p` | Project directory. Defaults to the discovered root. | no |  |  |
+| `--target` | Named profile from kiri.yml. Enables live checks (adapter health). | no |  |  |
+| `--only` | Comma-separated check ids to run exclusively. | no |  |  |
+| `--skip` | Comma-separated check ids to skip. | no |  |  |
+| `--format` | Output format: 'table' (default) or 'json'. | no | table |  |
+| `--strict` | Treat warnings as failures (exit 2 on any warning). | no | False |  |
+
 ## kiri list-generated
 
 Enumerate files the kiri generator owns...
