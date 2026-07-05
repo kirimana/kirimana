@@ -1,0 +1,71 @@
+name: Bug report
+description: Something in Kirimana or the kiri CLI isn't working as expected.
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug. Please search existing issues first — it may already be reported.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the bug, and what you expected instead.
+      placeholder: When I run `kiri apply` against a DuckDB target, …
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: The commands and contract/config (redact secrets) needed to reproduce.
+      placeholder: |
+        1. `kiri init demo --silver-technique flat`
+        2. …
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: kiri version
+      description: Output of `kiri --version` (or the commit if running from source).
+      placeholder: e.g. 1.0.0-beta.1
+    validations:
+      required: true
+  - type: dropdown
+    id: runtime
+    attributes:
+      label: Runtime
+      description: Which runtime were you targeting?
+      options:
+        - DuckDB (local)
+        - Databricks
+        - Other / not sure
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS + Python version (`python --version`).
+      placeholder: macOS 15 · Python 3.12.4
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: Paste the error output. Redact any secrets or customer data.
+      render: shell
+    validations:
+      required: false
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues and this isn't a duplicate.
+          required: true
+        - label: My logs and repro contain no secrets or confidential data.
+          required: true

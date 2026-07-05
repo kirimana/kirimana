@@ -1,37 +1,152 @@
 # Kirimana
 
-> **Open source AI-native data contract platform.**
-> Data engineers and data architects turn ODCS v3 contracts into compiled, runnable workflows across Databricks, Fabric, Trino, DuckDB and other SQL-bearing platforms — with AI policy gating built in from the first line.
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/downloads/)
+[![PyPI](https://img.shields.io/pypi/v/kiri-cli.svg)](https://pypi.org/project/kiri-cli/)
+
+**Turn a data contract into a running, governed data platform — on the runtime you already use.**
+
+*Kirimana* is Māori for **contract** — literally, to place your *mana* (honour, authority) on paper. You describe each dataset once, as a contract. Kirimana generates the pipelines, enforces the governance, and keeps the whole thing traceable — with an AI assistant, **Kiri**, doing the heavy lifting when you want it and staying out of the way when you don't.
+
+> **Status: private beta — invitation only (1.0.0-beta.1).** The engine, the `kiri` CLI, and the DuckDB and Databricks runtimes work end-to-end today. The `kiri-cli` wheel is published to PyPI; the repository and support are invitation-gated. Interfaces still move between beta releases — this is not GA. **Request access at [kirimana.io](https://kirimana.io).**
+
+Open source · Apache-2.0 · community-driven.
 
 ---
 
-## Status
+## What is Kirimana?
 
-**Private preview, v0.9 (2026-05).** Source code goes public alongside v1.0, targeted for H2 2026. This repository currently holds the manifesto: architecture, decisions, governance.
+Most teams building a data platform face the same fork in the road:
 
-If you'd like early access as a design partner, see [kirimana.io](https://kirimana.io).
+- **Buy into one vendor** — Delta Live Tables, Fabric Dataflows — and accept the lock-in, or
+- **Hand-assemble a dozen open-source tools** — ingestion, transformation, catalog, quality, orchestration, lineage — and own the glue forever.
 
-## What you'll find here
+Kirimana takes a third path. **You declare each dataset as a data contract** — an [ODCS](https://bitol.io/) document that states, in one place, where the data comes from, what it looks like, who owns it, how it's classified, how often it runs, and what quality it must meet. From that contract Kirimana:
 
-- **[`docs/architecture/`](docs/architecture/)** — current view of what Kirimana is, grouped logically. Start with [`arch-01-overview.md`](docs/architecture/arch-01-overview.md).
-- **[`docs/adr/`](docs/adr/)** — curated set of 32 architectural decision records.
-- **[`GOVERNANCE.md`](GOVERNANCE.md)** — who stewards the project, foundation path, licence commitment.
-- **[`SECURITY.md`](SECURITY.md)** — how to report vulnerabilities.
-- **[`CONTRIBUTING.md`](CONTRIBUTING.md)** — what we can accept today, what opens up at v1.0.
+1. **Generates the transformations** (bronze → silver → gold) as plain dbt-core models,
+2. **Runs them on your platform** through an adapter — DuckDB on your laptop, Databricks in the cloud,
+3. **Enforces governance** — owner, classification, PII, retention, lawful basis — in the canonical model *and* the catalog, and
+4. **Keeps a full audit trail** of every apply and every AI call.
 
-## What you won't find here yet
+The contract is the source of truth. Everything downstream is generated from it and traceable back to it.
 
-The engine, adapters, CLI, AI Gateway, web UI, and Helm chart. All of that lands when the source code goes public at v1.0.
+## Who it's for
 
-## Brand and licence
+**Enterprise-grade by design, accessible to every team.** The same contract that governs a two-person analytics team scales to a regulated enterprise — the guarantees (ownership, classification, lineage, audit) only compound as the estate grows. Kirimana is for teams who want the rigour of a governed platform without a platform team's worth of glue code.
 
-- **Licence:** [Apache-2.0](LICENSE), forever. No BSL. No CLA. DCO sign-off only.
-- **Steward:** [David Barton Consulting AB](https://kirimana.io) (Sweden). Foundation path described in [GOVERNANCE.md](GOVERNANCE.md).
-- **Standards:** Built on [ODCS v3](https://bitol-io.github.io/open-data-contract-standard/) (Bitol / Linux Foundation AI & Data).
+## What a contract looks like
 
-## Read order for newcomers
+A contract is ordinary ODCS with a documented `kiri.*` extension namespace for the things a data platform needs to know:
 
-1. [`docs/architecture/arch-01-overview.md`](docs/architecture/arch-01-overview.md) — what Kirimana is in 5 minutes
-2. [`docs/adr/001-apache-2-0-license-forever.md`](docs/adr/001-apache-2-0-license-forever.md) and [002](docs/adr/002-governance-and-stewardship.md) — why we built it open
-3. [`docs/adr/006-odcs-v3-canonical-metadata.md`](docs/adr/006-odcs-v3-canonical-metadata.md) and [011](docs/adr/011-two-category-adapter-model.md) — the two load-bearing architectural choices
-4. [`docs/architecture/arch-04-ai-gateway.md`](docs/architecture/arch-04-ai-gateway.md) — what makes this AI-native, not AI-bolted-on
+```yaml
+apiVersion: 3.0.0
+kind: DataContract
+id: com.example.crm.customer
+name: CRM Customer
+version: 1.0.0
+domain: crm
+owner: crm-team@example.com
+
+schema:
+  - name: customer
+    logicalType: table
+    properties:
+      - name: customer_id
+        logicalType: string
+        primaryKey: true
+        required: true
+      - name: email
+        logicalType: string
+        required: true
+        unique: true
+        customProperties:
+          - property: kiri.pii.categories
+            value: [contact]
+          - property: kiri.pii.direct_identifier
+            value: true
+
+customProperties:
+  - property: kiri.classification
+    value: confidential
+  - property: kiri.gdpr.lawful_basis
+    value: contract
+  - property: kiri.gdpr.retention_period_days
+    value: 2555
+  - property: kiri.schedule.cadence
+    value: daily
+```
+
+That single document drives code generation, the governance catalog, the quality checks, the schedule, and the compliance view — no second config to keep in sync.
+
+## What makes it different
+
+- **Contract-first, AI-readable.** One ODCS document answers *everything* about a dataset. It's designed to be read by humans, tools, and AI alike.
+- **AI-augmented, never AI-dependent.** Kiri can draft contracts, onboard a source from a plain-English description, and explain a failed run — but every AI call goes through a trust-laddered gateway with audit, cost control, and an air-gapped local-model option. Turn the AI off and the platform works identically, just with less acceleration.
+- **Governance is enforced, not documented.** Owner and classification are mandatory. PII, lawful basis, and retention travel with the data into the catalog. Secrets are never in code or YAML — only vault references.
+- **PR-time linting.** Contract violations are caught in review, before they reach a warehouse.
+- **Portable by construction.** The transformations are plain dbt-core; the platform-specific bits live behind adapters. Your logic isn't trapped in a proprietary runtime.
+- **Everything as code.** Contracts, policy, schedules, and releases are versioned files — reviewable, diffable, and reproducible.
+
+## Quick start
+
+Install the `kiri` CLI from PyPI (**Python 3.12+**):
+
+```bash
+pip install kiri-cli          # base + local DuckDB runtime
+# optional runtime extras: kiri-cli[databricks], [trino], [iceberg], [all]
+
+kiri --version
+kiri init my_warehouse --silver-technique flat
+cd my_warehouse
+kiri --help                   # explore: init · ingest · contract · plan · apply · catalog · …
+```
+
+`kiri init` scaffolds a self-contained data-warehouse repository. From there you add sources, author contracts (by hand or with Kiri's help), then `kiri plan` to preview and `kiri apply` to build. A guided setup for a Databricks target ships as a reference workflow.
+
+See the full command reference in [`docs/cli/`](docs/cli/).
+
+### Source access (private beta)
+
+Kirimana is in an **invitation-only private beta**. The engine source, the self-host and adapter tooling, and the runnable examples live in a private repository during the beta and are not part of this public front-door repo.
+
+The published `kiri-cli` wheel on PyPI is the primary way to use Kirimana today (see the quick start above). For source access, self-hosting, or to join the beta, **request access at [kirimana.io](https://kirimana.io).**
+
+## Architecture at a glance
+
+```
+        You / your team
+              │
+   ┌──────────┴──────────────────────────────────────┐
+   │   kiri (CLI)    ·    MCP server    ·    web UI     │   ← how you interact
+   └──────────┬──────────────────────────────────────┘
+              │
+   ┌──────────▼──────────────────────────────────────┐
+   │  Engine — platform-agnostic core:                 │
+   │  contract model · code generation · AI gateway ·  │
+   │  quality · catalog · vault                         │
+   └──────────┬──────────────────────────────────────┘
+              │  adapters (platform + framework)
+   ┌──────────▼──────────────────────────────────────┐
+   │   DuckDB (local)        Databricks (Delta)        │   ← runtimes exercised today
+   └──────────────────────────────────────────────────┘
+```
+
+The core is deliberately platform-agnostic: transformations are generated as dialect-rendered dbt-core, and everything platform-specific sits behind a documented adapter seam. **DuckDB and Databricks are the runtimes exercised today.** The adapter architecture is how additional platforms are added — that surface exists, but only these two are shipped and tested.
+
+Industry data models and paid capabilities ship as installable **packs**, so the open-source core stays lean.
+
+## Learn more
+
+| Where | What |
+|---|---|
+| [`docs/cli/`](docs/cli/) | The full `kiri` CLI reference and how-to guides |
+| [`docs/cli/getting-started.md`](docs/cli/getting-started.md) | From `pip install` to your first built warehouse |
+| [kirimana.io](https://kirimana.io) | Product overview, the design principles, and private-beta access |
+
+## Contributing
+
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for the workflow (conventional commits, DCO sign-off, tests on DuckDB), [GOVERNANCE.md](GOVERNANCE.md) for how decisions are made, [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for community expectations, and [SECURITY.md](SECURITY.md) to report a vulnerability.
+
+## License
+
+[Apache-2.0](LICENSE) — for the core, forever. Copyright notice in [NOTICE](NOTICE).

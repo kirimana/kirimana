@@ -1,40 +1,42 @@
 # Contributing to Kirimana
 
-Thank you for your interest. Here is how the project handles contributions.
+Thank you for your interest. Kirimana is built on the belief that platform-agnostic, governed data automation should be a community effort — not a proprietary product.
 
-## Current status: private preview
+> **Kirimana is in an invitation-only private beta (1.0.0-beta.1).** The engine source lives in a private repository during the beta, so code contributions are handled through the beta program rather than this public front-door repo. **Request beta access at [kirimana.io](https://kirimana.io).** This repository (the public front-door: README, CLI docs, community-health files) accepts documentation fixes and issues directly.
 
-Kirimana is in private preview (v0.9). External code contributions are not yet open — the public repository contains documentation, architecture decisions, and governance only. Source code goes public alongside v1.0 (target H2 2026).
+## Ways to contribute
 
-In this window, the contributions we **can** accept and value are:
+1. **Industry packs** — the highest-leverage contribution. Build a reusable data model for a common source system (Microsoft Dynamics, Salesforce, SAP, Workday, …).
+2. **Adapters** — add support for a new target platform (Snowflake, BigQuery, Redshift, Postgres) or a new transformation framework (SQLMesh, Dagster, Airflow).
+3. **Core** — canonical model, ODCS parser, AI service layer, catalog, CLI.
+4. **Documentation** — tutorials, architecture deep-dives, translations. Fixes to the [CLI docs](docs/cli/) in this repo are welcome as PRs.
 
-- **Documentation fixes** — typos, broken links, factual errors in ADRs or architecture docs
-- **Discussions** — opening issues to flag confusion, questions, or use-cases we should know about
-- **Bitol / ODCS feedback** — if you're a contributor to the ODCS standard, our proposed `ai_policy` extension (see [ADR 008](docs/adr/008-ai-policy-extension-proposal.md)) is open for comment
+## Developer Certificate of Origin (DCO)
 
-## After v1.0 (GA): full contributions open
+Every commit must carry a `Signed-off-by:` line (`git commit -s`). By adding the sign-off, you certify the terms of the [Developer Certificate of Origin](https://developercertificate.org/). No CLA is required.
 
-When the source code goes public, we welcome:
+## Principles we hold contributions to
 
-- Bug fixes and feature work via PR
-- New adapters following the conformance contract ([ADR 012](docs/adr/012-adapter-conformance-versioning.md))
-- New ADRs proposing architectural changes
-- Pack development against the public Pack API
+Every PR is evaluated against the project's six design principles. In short:
 
-## Sign your commits — DCO
+- **Flow.** Change must trace to a user need. Describe the persona and journey in the PR.
+- **AI-first + ownership.** New contracts and metadata objects declare `owner` and `kiri.classification`.
+- **Simplicity.** Prefer existing tools (dbt, DuckDB) over forking them. Complexity needs justification.
+- **Independence.** Platform-specific code lives behind the adapter interface. No platform-specific features in core.
+- **Modularity.** Services communicate via documented contracts (OpenAPI / Pydantic). No cross-service imports.
+- **Security.** Security/governance is designed in, not added later. Every AI call is audit-logged.
 
-Kirimana uses the [Developer Certificate of Origin](https://developercertificate.org/). Every commit must include a `Signed-off-by:` line. This is a lightweight assertion that you have the right to contribute the code; it does not require a corporate CLA.
+## Pull request checklist (documentation PRs in this repo)
 
-To add the sign-off automatically: `git commit -s`.
+- [ ] Every commit signed off with DCO (`git commit -s`)
+- [ ] Links resolve (no dead paths)
+- [ ] Prose matches the private-beta framing (no self-host / source instructions that don't apply to this repo)
 
-We do not use a CLA.
+Engine, adapter, and pack contributions follow the private-beta program's own checklist — request access at [kirimana.io](https://kirimana.io).
 
-## Style
+## Discussions & governance
 
-- Python: `black`, `ruff`, `mypy --strict` on touched modules. Configured in `pyproject.toml` (visible at GA).
-- Markdown: one sentence per line for diff readability is preferred but not required.
-- Commit messages: short imperative subject ("Add resilience taxonomy"), optional body explaining the why.
-
-## Code of Conduct
-
-Participation in this project is governed by the [Code of Conduct](CODE_OF_CONDUCT.md).
+- Questions & ideas: GitHub Discussions
+- Bugs & features: GitHub Issues
+- Security: see [SECURITY.md](SECURITY.md)
+- Governance: see [GOVERNANCE.md](GOVERNANCE.md)

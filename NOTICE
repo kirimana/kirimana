@@ -1,11 +1,10 @@
 Kirimana
-Copyright (c) 2026 David Barton Consulting AB
+Copyright 2026 The Kirimana project contributors
 
 This product is licensed under the Apache License, Version 2.0 (the "License");
 you may not use this product except in compliance with the License.
-You may obtain a copy of the License at
+You may obtain a copy of the License in the LICENSE file in the root of this
+repository or at http://www.apache.org/licenses/LICENSE-2.0.
 
-    http://www.apache.org/licenses/LICENSE-2.0
-
-This product includes software developed by David Barton Consulting AB
-and the Kirimana contributors.
+This NOTICE file is distributed with the product per section 4(d) of the License.
+Third-party attributions (when they are introduced) will be appended below.
