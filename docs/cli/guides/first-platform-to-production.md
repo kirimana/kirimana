@@ -6,9 +6,10 @@ and scheduled. It stitches the focused guides together in order and points at
 the reference **skills** that let Kiri drive each step for you.
 
 Each step below has a **do-it-yourself** command line and a **let-Kiri-drive-it**
-skill (invoke with `/<skill-name>` in Claude Code, or ask your assistant to run
-it via the [MCP setup](mcp-databricks-and-kiri-setup.md)). Both do the same
-thing — the skills just add the guardrails and prompts.
+skill. Install the skills once with `kiri skills install <name>` (or `--all`),
+then invoke one with `/<skill-name>` in Claude Code — or ask your assistant to
+run it via the [MCP setup](mcp-databricks-and-kiri-setup.md). Both paths do the
+same thing — the skills just add the guardrails and prompts.
 
 ---
 

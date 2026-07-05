@@ -31,7 +31,7 @@ documented **`kiri.*`** namespace — for example `kiri.classification`,
 `kiri.lineage.*`, `kiri.schedule.*`, `kiri.ai_policy.*`. Each namespace is promoted to a
 typed attribute on the canonical model; unlisted custom properties round-trip unchanged in a
 pass-through `extras` bag. The authoritative list of what goes where lives in
-[`docs/contracts/metadata-master.md`](../../contracts/metadata-master.md).
+**`docs/contracts/metadata-master.md`**.
 
 Two rules matter to an architect:
 
@@ -122,8 +122,8 @@ reporting goal all the way back to a source column — see
 
 ## Related reference
 
-- Concept deep-dive: [`docs/contracts/metadata-master.md`](../../contracts/metadata-master.md)
-  and [`docs/architecture.md`](../../architecture.md)
+- Concept deep-dive: **`docs/contracts/metadata-master.md`**
+  and **`docs/architecture.md`**
 - [Contracts & schema](../contracts-schema.md) — the generated `kiri contract` command reference
 - [Naming, catalog & schema registry](./naming-catalog-and-schema-registry.md)
 - [Silver & Data Vault](../silver-datavault.md)

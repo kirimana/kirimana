@@ -621,3 +621,69 @@ kiri maturity assess --format json
 ```bash
 kiri maturity assess --require-level 4
 ```
+
+## kiri skills
+
+List and install Kirimana's reference...
+
+### Usage
+
+```text
+Usage: kiri skills [OPTIONS] COMMAND [ARGS]...
+```
+
+### Arguments
+
+None.
+
+### Options
+
+None.
+
+### Subcommands
+
+- [`kiri skills install`](#kiri-skills-install) - Install one or more reference skills into...
+- [`kiri skills list`](#kiri-skills-list) - List the reference skills bundled with the...
+
+### kiri skills install
+
+Install one or more reference skills into...
+
+### Usage
+
+```text
+Usage: kiri skills install [OPTIONS] [NAMES]...
+```
+
+### Arguments
+
+| Name | Description | Required | Default | Choices |
+| --- | --- | --- | --- | --- |
+| `NAMES` | Skill names to install (omit and pass --all for every skill). | no |  |  |
+
+### Options
+
+| Name | Description | Required | Default | Choices |
+| --- | --- | --- | --- | --- |
+| `--all` | Install every bundled skill. | no | False |  |
+| `--user` | Install into ~/.claude/skills/ instead of ./.claude/skills/. | no | False |  |
+| `--force` | Overwrite an already-installed skill. | no | False |  |
+| `--target-dir` | Explicit destination directory (overrides the default + --user). | no |  |  |
+
+### kiri skills list
+
+List the reference skills bundled with the...
+
+### Usage
+
+```text
+Usage: kiri skills list [OPTIONS]
+```
+
+### Arguments
+
+None.
+
+### Options
+
+None.

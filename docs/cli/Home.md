@@ -66,7 +66,6 @@ Task- and concept-oriented walkthroughs that compose the command reference below
 | [Platform Operations](platform-operations.md) | Operate adapters, cloud integrations, repositories, federation, and platform maintenance tasks. | 9 |
 | [Migration](migration.md) | Run source-system migration workflows. | 1 |
 | [Secrets](secrets.md) | Administer vault-backed secret references and secret validation workflows. | 1 |
-| [AI Assistants](ai-assistants.md) | Use Kiri-assisted planning, explanation, maturity, batch, and incident support commands. | 7 |
+| [AI Assistants](ai-assistants.md) | Use Kiri-assisted planning, explanation, maturity, batch, and incident support commands. | 8 |
 | [Packs Extensions](packs-extensions.md) | Install and manage community or organization-authored extension packs. | 1 |
 | [Docs Meta](docs-meta.md) | Generate project documentation and documentation metadata. | 1 |
-| [Other](other.md) | Commands not yet assigned to a functional area. | 1 |
