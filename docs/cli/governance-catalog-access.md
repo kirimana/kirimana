@@ -335,12 +335,6 @@ None.
 | --- | --- | --- | --- | --- |
 | `--trace-id` | (unused; see error) | no |  |  |
 
-### Examples
-
-```bash
-kiri audit purge`` is intentionally not implemented. Hard-deleting
-```
-
 ### kiri audit redact
 
 Redact a log row in place + append a...
@@ -390,6 +384,7 @@ None.
 - [`kiri catalog init`](#kiri-catalog-init) - Create an empty catalog database.
 - [`kiri catalog lineage`](#kiri-catalog-lineage) - Show the immediate upstream and downstream...
 - [`kiri catalog list`](#kiri-catalog-list) - List catalog assets with optional filters.
+- [`kiri catalog migrate-annotations`](#kiri-catalog-migrate-annotations) - Write store-only steward annotations back...
 - [`kiri catalog pii-scan`](#kiri-catalog-pii-scan) - List every asset containing PII, with its...
 - [`kiri catalog policy`](#kiri-catalog-policy) - Manage access policies for the catalog...
 - [`kiri catalog publish`](#kiri-catalog-publish) - Build and atomically publish the...
@@ -492,6 +487,28 @@ None.
 | `--certification` |  | no |  | `draft`, `certified`, `deprecated`, `restricted` |
 | `--pii` | Only assets containing PII | no | False |  |
 | `--limit` |  | no | 100 |  |
+
+### kiri catalog migrate-annotations
+
+Write store-only steward annotations back...
+
+### Usage
+
+```text
+Usage: kiri catalog migrate-annotations [OPTIONS]
+```
+
+### Arguments
+
+None.
+
+### Options
+
+| Name | Description | Required | Default | Choices |
+| --- | --- | --- | --- | --- |
+| `--project`, `-p` | kiri project directory | no |  |  |
+| `--db` | Catalog database path (defaults to the project catalog). | no |  |  |
+| `--apply` | Write the patched contracts to disk (default is a dry-run preview). | no | False |  |
 
 ### kiri catalog pii-scan
 
@@ -827,7 +844,33 @@ None.
 
 ### Subcommands
 
+- [`kiri compliance pii-flow`](#kiri-compliance-pii-flow) - Map every path personal data takes through...
 - [`kiri compliance report`](#kiri-compliance-report) - Generate a compliance report for the...
+
+### kiri compliance pii-flow
+
+Map every path personal data takes through...
+
+### Usage
+
+```text
+Usage: kiri compliance pii-flow [OPTIONS]
+```
+
+### Arguments
+
+None.
+
+### Options
+
+| Name | Description | Required | Default | Choices |
+| --- | --- | --- | --- | --- |
+| `--project`, `-p` | Project directory | no |  |  |
+| `--format` | Output: 'table' (default), 'json', or 'html'. | no | table |  |
+| `--category` | Filter origins to one PII category. | no |  |  |
+| `--basis` | Filter origins to one GDPR lawful basis. | no |  |  |
+| `--output` | Where to write the HTML annex. | no | pii-flow.html |  |
+| `--strict` | Exit 2 on error-severity findings (CI gate). | no | False |  |
 
 ### kiri compliance report
 
