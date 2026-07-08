@@ -28,6 +28,11 @@ Task- and concept-oriented walkthroughs that compose the command reference below
 | [Adding a source](guides/adding-a-source.md) |
 | [Getting the AI gateway working](guides/ai-gateway-setup.md) |
 | [The AI trust ladder and human approvals](guides/ai-trust-ladder-and-approvals.md) |
+| [Editing `kiri.yml` — the project config reference](guides/authoring-kiri-yml.md) |
+| [Editing layer manifests — bronze / silver / gold reference](guides/authoring-layer-manifests.md) |
+| [Authoring tasks — how to make common changes](guides/authoring-tasks.md) |
+| [Validating your YAML](guides/authoring-validation.md) |
+| [Authoring Kirimana YAML — overview](guides/authoring-yaml-overview.md) |
 | [Backfill and reprocess](guides/backfill-and-reprocess.md) |
 | [Consuming gold for BI](guides/consuming-gold-for-bi.md) |
 | [Data quality and invariants](guides/data-quality-and-invariants.md) |
