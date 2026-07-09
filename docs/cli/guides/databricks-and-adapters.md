@@ -63,6 +63,36 @@ For **MSSQL sources** (the migration path — see [Migration from legacy](migrat
 password: ${vault:databricks/prod:client_secret}
 ```
 
+## Choosing an audit tier
+
+How much evidence Kirimana records about each apply is an explicit choice, set once in `kiri.yml`, not a silent default. The `audit.tier` field takes one of four values:
+
+- **`none`** — no persistent Kirimana audit tables. Local development and proof-of-concept only; Kirimana refuses it on a real platform adapter so a production run can never be silently unaudited.
+- **`native`** — rely on the platform's own logs (the Databricks audit log, Workflow run history). No Kirimana-authored evidence.
+- **`thin`** — the minimum production tier. Kirimana writes a durable apply-log to its own store so every run is traceable, and correlates with the platform audit log on a shared trace identifier.
+- **`full`** — the compliance tier. Everything `thin` records, plus warehouse-side asset evidence (column lineage and access bindings). Required by the Compliance Pack.
+
+The tier is a conformance contract, not a vague dial: each tier names exactly which stores, fields, and retention it produces. A production run configured below the tier a Compliance Pack needs fails loudly rather than degrading in silence.
+
+## Pass-through: the databricks-native profile
+
+By default Kirimana owns a small control plane in your workspace (a project manifest, an apply-log, and, at the full tier, asset-evidence schemas). If you would rather Kirimana be a command-line accelerator that leaves **zero footprint** in your workspace, set the profile:
+
+```yaml
+# kiri.yml
+adapter_profile: databricks-native
+```
+
+Under this profile Kirimana writes **nothing** into your workspace metadata on any path — the durable audit relocates to Kirimana's own store instead, so you still get a full audit trail (pass-through is not no-audit). Because the profile owns no state in the warehouse, you can stop using Kirimana at any time and keep running.
+
+Give `kiri apply` an output directory and the profile also emits native artifacts into your repository:
+
+```bash
+kiri apply --out ./out
+```
+
+For every landing-zone source it writes a ready-to-run Databricks Auto Loader (`cloudFiles`) configuration under `out/ingestion/`, alongside the workflow definition — files you own, with no Kirimana runtime dependency.
+
 ## Related reference
 
 - [Platform operations](../platform-operations.md)
